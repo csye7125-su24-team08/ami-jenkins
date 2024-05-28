@@ -1,10 +1,10 @@
 name: Build Jenkins Image
 
-on: [pull_request]
-  # pull_request:
-  #   types: [closed]
-  #   branches:
-  #     - main
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   build-jenkins-image:
