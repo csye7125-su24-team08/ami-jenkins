@@ -18,6 +18,3 @@ xcaddy build --with github.com/caddy-dns/route53
 
 # Step 2: write a Caddyfile
 sudo ./caddy adapt
-
-# Step 3: Use caddy to serve Jenkins
-sudo ./caddy run

@@ -11,4 +11,4 @@ sudo apt install fontconfig openjdk-17-jre -y
 
 java -version
 
-jenkins
+sudo systemctl enable jenkins
