@@ -1,0 +1,12 @@
+# Packer build artifacts
+packer_cache/
+*.box
+
+# Packer logs
+*.log
+
+# Packer output files
+output-*
+
+.ssh
+.cache
