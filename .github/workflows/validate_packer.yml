@@ -13,9 +13,9 @@ jobs:
       - name: Install packer
         uses: hashicorp/setup-packer@main
 
-      - name: Run `packer init`
+      - name: Run packer init
         id: init
-        run: packer init packer
+        run: packer init .
 
       - name: Run packer fmt
         run: |

@@ -19,11 +19,11 @@ jobs:
 
       - name: Run `packer init`
         id: init
-        run: packer init packer
+        run: packer init .
 
       - name: Run packer fmt
         run: |
-          output=$(packer fmt packer)
+          output=$(packer fmt .)
           if [ -n "$output" ]; then
              echo "$output"
              exit 1

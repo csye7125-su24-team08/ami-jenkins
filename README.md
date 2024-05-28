@@ -26,4 +26,7 @@ To utilize this project, follow the steps below:
    packer build .
    ```
 
+### Remember:
+Setup aws credentials before running the project
+
 These commands will set up and execute the Packer configuration, resulting in the creation of a custom AMI with Jenkins and Caddy configured as a reverse proxy.
