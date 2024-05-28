@@ -7,7 +7,7 @@ on: [pull_request]
   #     - main
 
 jobs:
-  packer-functions:
+  build-jenkins-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,4 +37,4 @@ jobs:
           export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
           export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
           export AWS_DEFAULT_REGION=${{ secrets.AWS_DEFAULT_REGION }}
-          packer build template.pkr.hcl
+          packer build .
