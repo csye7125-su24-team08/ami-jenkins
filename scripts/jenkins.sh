@@ -67,7 +67,3 @@ done
 # Restart Jenkins to apply plugin changes
 echo "Restarting Jenkins to apply plugin changes"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
-
-# Wait for Jenkins to start (replace localhost with your Jenkins hostname if necessary)
-echo "Waiting for Jenkins to start"
-sleep 1000
