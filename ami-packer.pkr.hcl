@@ -26,7 +26,7 @@ build {
   }
   provisioner "file" {
     source      = "./scripts/test_job.groovy"
-    destination = "/opt/test_job.groovy"
+    destination = "~/test_job.groovy"
   }
   provisioner "shell" {
     scripts = [
