@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 echo "Installing Jenkins"
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
@@ -70,10 +70,4 @@ java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWOR
 
 # Wait for Jenkins to start (replace localhost with your Jenkins hostname if necessary)
 echo "Waiting for Jenkins to start"
-while ! nc -z localhost 8080; do
-  sleep 1
-done
-
-# Create a new Jenkins job
-echo "Creating a new Jenkins job"
-java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" groovy = <./test_job.groovy
+sleep 1000

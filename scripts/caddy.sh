@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 # Step 1: Install and run Caddy
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl

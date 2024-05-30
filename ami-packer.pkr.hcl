@@ -32,6 +32,7 @@ build {
     scripts = [
       "scripts/jenkins.sh",
       "scripts/caddy.sh",
+      "scripts/create_test_job.sh"
     ]
   }
 }
