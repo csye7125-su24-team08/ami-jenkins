@@ -1,3 +1,5 @@
+!#/bin/bash
+
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
@@ -12,3 +14,52 @@ sudo apt install fontconfig openjdk-17-jre -y
 java -version
 
 sudo systemctl enable jenkins
+sudo systemctl start jenkins
+
+wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O jenkins-cli.jar
+
+# Wait for Jenkins to start (replace localhost with your Jenkins hostname if necessary)
+while ! nc -z localhost 8080; do
+  sleep 1
+done
+
+
+export JENKINS_URL=http://localhost:8080
+export JENKINS_USER=admin
+export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+
+# Install recommended plugins
+plugins=(
+  cloudbees-folder
+  antisamy-markup-formatter
+  build-timeout
+  credentials-binding
+  timestamper
+  ws-cleanup
+  ant
+  gradle
+  workflow-aggregator
+  github-branch-source
+  pipeline-github-lib
+  pipeline-stage-view
+  git
+  github
+  github-api
+  ssh-slaves
+  matrix-auth
+  pam-auth
+  ldap
+  email-ext
+  mailer
+)
+
+# Install the recommended plugins
+for plugin in "${plugins[@]}"; do
+    echo "Installing plugin: $plugin"
+    java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
+done
+
+# Restart Jenkins to apply plugin changes
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
+
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -http -auth "$JENKINS_USER:$JENKINS_PASSWORD" groovy = < ./opt/test_job_groovy.groovy

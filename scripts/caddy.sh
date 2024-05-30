@@ -1,3 +1,5 @@
+!#/bin/bash
+
 # Step 1: Install and run Caddy
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
