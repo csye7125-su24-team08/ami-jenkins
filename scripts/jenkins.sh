@@ -62,4 +62,4 @@ done
 # Restart Jenkins to apply plugin changes
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
 
-java -jar jenkins-cli.jar -s "$JENKINS_URL" -http -auth "$JENKINS_USER:$JENKINS_PASSWORD" groovy = < ./opt/test_job_groovy.groovy
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -http -auth "$JENKINS_USER:$JENKINS_PASSWORD" groovy = < ./test_job.groovy
