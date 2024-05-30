@@ -24,6 +24,10 @@ build {
     source      = "./Caddyfile"
     destination = "~/Caddyfile"
   }
+  provisioner "file" {
+    source      = "./scripts/test_job.groovy"
+    destination = "/opt/test_job.groovy"
+  }
   provisioner "shell" {
     scripts = [
       "scripts/jenkins.sh",
