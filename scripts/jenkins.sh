@@ -55,6 +55,8 @@ plugins=(
   ldap
   email-ext
   mailer
+  metrics
+  pipeline-graph-view
 )
 
 # Install the recommended plugins
