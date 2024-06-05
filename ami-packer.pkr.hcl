@@ -33,7 +33,7 @@ build {
   }
   provisioner "file" {
     source      = "./scripts/jenkins-scripts/new-user.groovy"
-    destination = "~/new_user.groovy"
+    destination = "~/new-user.groovy"
   }
   provisioner "file" {
     source      = "./scripts/jenkins-scripts/gh-creds.groovy"
