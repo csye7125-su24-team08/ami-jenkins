@@ -5,7 +5,7 @@ export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 echo "Sleep till Jenkins is up"
 while ! nc -z localhost 8080; do
-  sleep 1
+  sleep 90
 done
 
 echo "Set env variable for github pat"

@@ -77,4 +77,4 @@ sudo apt-get install docker-ce -y
 sudo usermod -aG docker jenkins
 
 echo "Restarting Jenkins to apply plugin changes"
-java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
+sudo systemctl restart jenkins
