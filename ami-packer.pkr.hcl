@@ -39,6 +39,10 @@ build {
     source      = "./scripts/jenkins-scripts/docker-creds.groovy"
     destination = "~/docker-creds.groovy"
   }
+  provisioner "file" {
+    source      = "./scripts/jenkins-scripts/docker-image-job.groovy"
+    destination = "~/docker-image-job.groovy"
+  }
   provisioner "shell" {
     inline = [
       "sudo mkdir -p ~/jenkins-scripts",
