@@ -66,6 +66,8 @@ for plugin in "${plugins[@]}"; do
   java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
 done
 
-# Restart Jenkins to apply plugin changes
+echo "Setup Github credentials"
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ./jenkins_scripts/gh-cred.groovy $ACCESS_TOKEN
+
 echo "Restarting Jenkins to apply plugin changes"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
