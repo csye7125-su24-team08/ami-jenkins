@@ -44,7 +44,8 @@ build {
       "sudo mkdir -p ~/jenkins-scripts",
       "sudo mv ~/new_user.groovy ~/jenkins-scripts/new_user.groovy",
       "sudo mv ~/gh-creds.groovy ~/jenkins-scripts/gh-creds.groovy",
-      "sudo mv ~/docker-creds.groovy ~/jenkins-scripts/docker-creds.groovy"
+      "sudo mv ~/docker-creds.groovy ~/jenkins-scripts/docker-creds.groovy",
+      "sudo mv ~/docker-image-job.groovy ~/jenkins-scripts/docker-image-job.groovy"
     ]
   }
   provisioner "shell" {
