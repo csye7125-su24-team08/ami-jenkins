@@ -21,11 +21,7 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-  provisioner "shell" {
-    inline = [
-      "sudo mkdir -p ~/jenkins-scripts"
-    ]
-  }
+
 
   provisioner "file" {
     source      = "./Caddyfile"
@@ -33,15 +29,23 @@ build {
   }
   provisioner "file" {
     source      = "./scripts/jenkins-scripts/new_user.groovy"
-    destination = "~/jenkins-scripts/new_user.groovy"
+    destination = "~/new_user.groovy"
   }
   provisioner "file" {
     source      = "./scripts/jenkins-scripts/gh-creds.groovy"
-    destination = "~/jenkins-scripts/gh-creds.groovy"
+    destination = "~/gh-creds.groovy"
   }
   provisioner "file" {
     source      = "./scripts/jenkins-scripts/docker-creds.groovy"
-    destination = "~/jenkins-scripts/docker-creds.groovy"
+    destination = "~/docker-creds.groovy"
+  }
+  provisioner "shell" {
+    inline = [
+      "sudo mkdir -p ~/jenkins-scripts",
+      "sudo mv ~/new_user.groovy ~/jenkins-scripts/new_user.groovy",
+      "sudo mv ~/gh-creds.groovy ~/jenkins-scripts/gh-creds.groovy",
+      "sudo mv ~/docker-creds.groovy ~/jenkins-scripts/docker-creds.groovy"
+    ]
   }
   provisioner "shell" {
     scripts = [

@@ -78,9 +78,15 @@ java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWOR
 echo "Setup Docker image builder job"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ~/jenkins-scripts/docker-image-job.groovy
 
-echo "Restarting Jenkins to apply plugin changes"
-java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
-
 
 echo "Install Docker"
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+sudo apt-get update -y
+sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update -y
+sudo apt-get install docker-ce -y
+sudo usermod -aG docker jenkins
+
+echo "Restarting Jenkins to apply plugin changes"
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
