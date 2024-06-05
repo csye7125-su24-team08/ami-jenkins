@@ -58,8 +58,6 @@ plugins=(
   metrics
   pipeline-graph-view
   docker-commons
-  docker-pipeline
-  docker
 )
 
 # Install the recommended plugins
