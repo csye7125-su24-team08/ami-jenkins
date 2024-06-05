@@ -21,7 +21,7 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-  provisioner "shell"{
+  provisioner "shell" {
     inline = [
       "mkdir -p /jenkins-scripts"
     ]
