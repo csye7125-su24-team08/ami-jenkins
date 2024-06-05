@@ -18,5 +18,4 @@ sudo apt install xcaddy -y
 
 xcaddy build --with github.com/caddy-dns/route53
 
-# Step 2: write a Caddyfile
 sudo ./caddy adapt

@@ -57,6 +57,9 @@ plugins=(
   mailer
   metrics
   pipeline-graph-view
+  docker-commons
+  docker-pipeline
+  docker
 )
 
 # Install the recommended plugins
@@ -66,6 +69,14 @@ for plugin in "${plugins[@]}"; do
   java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
 done
 
-# Restart Jenkins to apply plugin changes
+echo "Setup Github credentials"
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ./jenkins_scripts/gh-creds.groovy $GH_ACCESS_TOKEN
+
+echo "Setup Docker credentials"
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ./jenkins_scripts/docker-creds.groovy $DOCKER_ACCESS_TOKEN
+
+echo "Setup Docker image builder job"
+java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ./jenkins_scripts/docker-image-job.groovy
+
 echo "Restarting Jenkins to apply plugin changes"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD safe-restart
