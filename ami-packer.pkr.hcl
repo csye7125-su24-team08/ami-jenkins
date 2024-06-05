@@ -51,7 +51,7 @@ build {
     scripts = [
       "scripts/jenkins.sh",
       "scripts/caddy.sh",
-      "scripts/job-setup.sh"
+      "scripts/job-setup.sh",
       "scripts/create_users.sh"
     ]
   }
