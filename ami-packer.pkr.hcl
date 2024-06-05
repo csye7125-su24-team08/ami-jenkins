@@ -23,7 +23,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "mkdir -p /jenkins-scripts"
+      "sudo mkdir -p /jenkins-scripts"
     ]
   }
 
