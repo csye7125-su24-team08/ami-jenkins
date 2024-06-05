@@ -39,6 +39,10 @@ build {
     source      = "./scripts/jenkins-scripts/gh-creds.groovy"
     destination = "~/jenkins-scripts/gh-creds.groovy"
   }
+  provisioner "file" {
+    source      = "./scripts/jenkins-scripts/docker-creds.groovy"
+    destination = "~/jenkins-scripts/docker-creds.groovy"
+  }
   provisioner "shell" {
     scripts = [
       "scripts/jenkins.sh",
