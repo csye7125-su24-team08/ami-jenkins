@@ -25,5 +25,8 @@ jobs:
              exit 1
           fi
 
+      - name: Add Tokens file
+        run: touch tokens.txt
+
       - name: Run packer validate
         run: packer validate .
