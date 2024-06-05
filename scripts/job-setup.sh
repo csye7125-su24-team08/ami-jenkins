@@ -17,3 +17,5 @@ java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWOR
 
 echo "Setup Docker image builder job"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ~/jenkins-scripts/docker-image-job.groovy
+
+rm tokens.txt
