@@ -24,7 +24,7 @@ build {
 
 
   provisioner "file" {
-    source      = "./Caddyfile"
+    source = "./Caddyfile"
     destination = "~/Caddyfile"
   }
   provisioner "file" {
