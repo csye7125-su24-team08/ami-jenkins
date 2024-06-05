@@ -6,15 +6,11 @@ import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition
 def jobName = 'Static-site-docker-image-job'
 def jobScript = '''
 pipeline {
-  triggers{
-    githubWebhook()
-  }
   environment {
     DOCKER_CLI_EXPERIMENTAL = 'enabled'
     registry = "dongrep/static-site"
-    registryCredential = 'docker-credentials'
     gitCredential = 'github-credentials'
-    DOCKER_CERT_PATH = credentials('docker-credentials')
+    DOCKERHUB_CREDENTIALS = credentials('docker-credentials')
   }
   agent any
   stages {
@@ -42,23 +38,11 @@ pipeline {
             // Build multi-architecture image
             sh "docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${registry}:latest ."
             
-            // Push multi-architecture image
+            // Push multi-architecture image with registry credentials
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u dongrep --password-stdin'
+            
             sh "docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t ${registry}:latest --push ."
         }
-      }
-    }
-    stage('Deploy our image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-    stage('Cleaning up') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
   }

@@ -6,16 +6,9 @@ curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --d
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
 sudo apt install caddy
-caddy stop
 
-sudo apt install golang-go -y
+sudo cp ~/Caddyfile /etc/caddy/Caddyfile
 
-sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-xcaddy-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-xcaddy.list
-sudo apt update
-sudo apt install xcaddy -y
-
-xcaddy build --with github.com/caddy-dns/route53
-
-sudo ./caddy adapt
+sudo systemctl daemon-reload
+sudo systemctl enable caddy
+sudo systemctl start caddy
