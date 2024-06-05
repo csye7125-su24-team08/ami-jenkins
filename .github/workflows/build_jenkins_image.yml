@@ -29,17 +29,15 @@ jobs:
              exit 1
           fi
 
-      - name: Run packer validate
-        run: packer validate .
-
-      - name: Run packer validate
-        run: packer validate .
 
       - name: Add github and docker tokens
         run: |
           touch tokens.txt
           echo ${{ secrets.GH_ACCESS_TOKEN }} >> tokens.txt
           echo ${{ secrets.DOCKER_ACCESS_TOKEN }} >> tokens.txt
+          
+      - name: Run packer validate
+        run: packer validate .
 
       - name: Run packer build
         run: |
