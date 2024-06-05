@@ -32,7 +32,7 @@ build {
     destination = "~/tokens.txt"
   }
   provisioner "file" {
-    source      = "./scripts/jenkins-scripts/new_user.groovy"
+    source      = "./scripts/jenkins-scripts/new-user.groovy"
     destination = "~/new_user.groovy"
   }
   provisioner "file" {
@@ -50,7 +50,7 @@ build {
   provisioner "shell" {
     inline = [
       "sudo mkdir -p ~/jenkins-scripts",
-      "sudo mv ~/new_user.groovy ~/jenkins-scripts/new_user.groovy",
+      "sudo mv ~/new-user.groovy ~/jenkins-scripts/new-user.groovy",
       "sudo mv ~/gh-creds.groovy ~/jenkins-scripts/gh-creds.groovy",
       "sudo mv ~/docker-creds.groovy ~/jenkins-scripts/docker-creds.groovy",
       "sudo mv ~/docker-image-job.groovy ~/jenkins-scripts/docker-image-job.groovy",
