@@ -6,6 +6,9 @@ import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition
 def jobName = 'Static-site-docker-image-job'
 def jobScript = '''
 pipeline {
+  triggers{
+    githubWebhook()
+  }
   environment {
     registry = "dongrep/static-site"
     registryCredential = 'docker-credentials'
