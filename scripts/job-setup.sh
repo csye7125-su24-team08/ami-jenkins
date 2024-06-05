@@ -4,13 +4,13 @@ export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 
 echo "Set env variable for github pat"
-export GH_ACCESS_TOKEN = $(head -n 1 tokens.txt)
+export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)
 
 echo "Setup Github credentials"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ~/jenkins-scripts/gh-creds.groovy $GH_ACCESS_TOKEN
 
 echo "Set env variable for docker"
-export DOCKER_ACCESS_TOKEN = $(head -n 2 tokens.txt | sed -n 2p)
+export DOCKER_ACCESS_TOKEN=$(head -n 2 tokens.txt | sed -n 2p)
 
 echo "Setup Docker credentials"
 java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ~/jenkins-scripts/docker-creds.groovy $DOCKER_ACCESS_TOKEN
