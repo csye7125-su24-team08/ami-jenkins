@@ -21,7 +21,7 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-  
+
 
   provisioner "file" {
     source      = "./Caddyfile"
