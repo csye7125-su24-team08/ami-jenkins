@@ -12,7 +12,7 @@ done
 # Create a new Jenkins job
 echo "Creating a new users - admin, piyush, and anuraag - if fails then try again"
 
-while ! java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ~/jenkins-scripts/create-user.groovy; do
+while ! java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth $JENKINS_USER:$JENKINS_PASSWORD groovy = < ~/jenkins-scripts/new-user.groovy; do
   echo "Command failed. Retrying in 5 seconds..."
   sleep 5
 done
