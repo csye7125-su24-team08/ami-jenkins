@@ -1,6 +1,6 @@
 export JENKINS_URL=http://localhost:8080
 export JENKINS_USER=admin
-export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+export JENKINS_PASSWORD=admin
 
 echo "Set env variable for github pat"
 export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)
