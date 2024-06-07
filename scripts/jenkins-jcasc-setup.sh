@@ -64,8 +64,6 @@ for plugin in "${plugins[@]}"; do
   java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
 done
 
-java -jar jenkins-cli.jar -s "localhost:8080" -auth "admin:admin" install-plugin job-dsl
-
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
 sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml

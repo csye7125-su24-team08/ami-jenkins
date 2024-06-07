@@ -14,7 +14,16 @@ jenkins:
       permissions:
         - "Overall/Administer:admin"
         - "Overall/Read:authenticated"
+<<<<<<< HEAD
 
+=======
+security:
+  queueItemAuthenticator:
+    authenticators:
+      - global:
+          strategy: triggeringUsersAuthorizationStrategy
+          
+>>>>>>> main
 credentials:
   system:
     domainCredentials:
@@ -35,4 +44,27 @@ unclassified:
     url: https://jenkins.clustering.ninja
 
 jobs:
+<<<<<<< HEAD
   - file: /var/lib/jenkins/seedjob.groovy
+=======
+  script: >
+    pipelineJob('build-jenkins-image') {
+      definition {
+        cpsScm {
+          scm {
+            git {
+              remote {
+                url(https://github.com/cyse7125-su24-team08/static-site.git')
+                credentials('github-credentials')
+              }
+              branches('main')
+            }
+          }
+          scriptPath('Jenkinsfile')
+        }
+      }
+      triggers {
+        githubPush()
+      }
+    }
+>>>>>>> main
