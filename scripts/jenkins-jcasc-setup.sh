@@ -65,7 +65,7 @@ for plugin in "${plugins[@]}"; do
 done
 
 export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)
-export DOCKERHUB_ACCESS_TOKEN=$(tail -n 1 tokens.txt)
+export DOCKER_ACCESS_TOKEN=$(tail -n 1 tokens.txt)
 
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
