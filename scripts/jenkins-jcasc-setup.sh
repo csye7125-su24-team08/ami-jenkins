@@ -74,7 +74,7 @@ sudo cp ~/jenkins-scripts/casc.yaml /var/lib/jenkins/casc.yaml
 sudo chown jenkins:jenkins /var/lib/jenkins/casc.yaml
 
 echo "Copying Jenkins jobs"
-sudo mv -r ~/seedjob.groovy /var/lib/jenkins/seedjob.groovy
+sudo mv ~/seedjob.groovy /var/lib/jenkins/seedjob.groovy
 sudo chown jenkins:jenkins /var/lib/jenkins/seedjob.groovy
 
 # Configure JAVA_OPTS to disable setup wizard
