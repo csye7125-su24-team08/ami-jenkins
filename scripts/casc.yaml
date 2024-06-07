@@ -14,23 +14,17 @@ jenkins:
       permissions:
         - "Overall/Administer:admin"
         - "Overall/Read:authenticated"
-security:
-  queueItemAuthenticator:
-    authenticators:
-      - global:
-          strategy: triggeringUsersAuthorizationStrategy
-          
 credentials:
   system:
     domainCredentials:
       - credentials:
           - usernamePassword:
-              id: "github-credentials"
+              id: "GITHUB_CREDENTIALS"
               password: "${GH_ACCESS_TOKEN}"
               scope: GLOBAL
               username: dongrep
           - usernamePassword:
-              id: "docker-credentials"
+              id: "DOCKER_CREDENTIALS"
               password: "${DOCKER_ACCESS_TOKEN}"
               scope: GLOBAL
               username: dongrep
@@ -40,23 +34,4 @@ unclassified:
     url: https://jenkins.clustering.ninja
 
 jobs:
-  script: >
-    pipelineJob('build-jenkins-image') {
-      definition {
-        cpsScm {
-          scm {
-            git {
-              remote {
-                url(https://github.com/cyse7125-su24-team08/static-site.git')
-                credentials('github-credentials')
-              }
-              branches('main')
-            }
-          }
-          scriptPath('Jenkinsfile')
-        }
-      }
-      triggers {
-        githubPush()
-      }
-    }
+  - file: /var/lib/jenkins/seedjob.groovy

@@ -38,15 +38,14 @@ build {
     destination = "~/casc.yaml"
   }
   provisioner "file" {
-    source      = "./scripts/plugins.txt"
-    destination = "~/plugins.txt"
+    source      = "./scripts/seedjob.groovy"
+    destination = "~/seedjob.groovy"
   }
   provisioner "shell" {
     inline = [
       "sudo mkdir -p ~/jenkins-scripts",
       "export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)",
       "export DOCKERHUB_ACCESS_TOKEN=$(tail -n 1 tokens.txt)",
-      "sudo cp ~/plugins.txt ~/jenkins-scripts/plugins.txt",
       "sudo cp ~/casc.yaml ~/jenkins-scripts/casc.yaml",
     ]
   }
