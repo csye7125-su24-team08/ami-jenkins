@@ -46,7 +46,7 @@ build {
       "sudo mkdir -p ~/jenkins-scripts",
       "export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)",
       "export DOCKERHUB_ACCESS_TOKEN=$(tail -n 1 tokens.txt)",
-      "cp ~/plugins.txt ~/jenkins-scripts/plugins.txt",
+      "sudo cp ~/plugins.txt ~/jenkins-scripts/plugins.txt",
     ]
   }
   provisioner "shell" {
