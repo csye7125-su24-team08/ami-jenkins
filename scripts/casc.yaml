@@ -9,7 +9,17 @@ jenkins:
           password: piyush
         - id: anuraag
           password: anuraag
-
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Administer:admin"
+        - "Overall/Read:authenticated"
+security:
+  queueItemAuthenticator:
+    authenticators:
+      - global:
+          strategy: triggeringUsersAuthorizationStrategy
+          
 credentials:
   system:
     domainCredentials:
@@ -28,28 +38,25 @@ credentials:
 unclassified:
   location:
     url: https://jenkins.clustering.ninja
-    
-  crumbIssuer:
-    excludeClientIPFromCrumb: true
 
 jobs:
   script: >
-      pipelineJob('build-jenkins-image') {
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url(https://github.com/cyse7125-su24-team08/static-site.git')
-                  credentials('github-credentials')
-                }
-                branches('main')
+    pipelineJob('build-jenkins-image') {
+      definition {
+        cpsScm {
+          scm {
+            git {
+              remote {
+                url(https://github.com/cyse7125-su24-team08/static-site.git')
+                credentials('github-credentials')
               }
+              branches('main')
             }
-            scriptPath('Jenkinsfile')
           }
-        }
-        triggers {
-          githubPush()
+          scriptPath('Jenkinsfile')
         }
       }
+      triggers {
+        githubPush()
+      }
+    }

@@ -11,17 +11,56 @@ sudo apt install fontconfig openjdk-17-jre -y
 
 java -version
 
-# Install Jenkins plugin manager tool:
-echo "Installing Jenkins plugin manager tool"
-wget --quiet \
-  https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.13.0/jenkins-plugin-manager-2.13.0.jar
+echo "Starting Jenkins"
+sudo systemctl start jenkins
 
-# Install plugins with jenkins-plugin-manager tool:
-echo "Installing Jenkins plugins"
-sudo java -jar ./jenkins-plugin-manager-2.13.0.jar --war /usr/share/java/jenkins.war \
-  --plugin-download-directory /var/lib/jenkins/plugins --plugin-file ~/jenkins-scripts/plugins.txt
+echo "Setup Jenkins CLI"
+wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O jenkins-cli.jar
 
-sudo chown jenkins:jenkins /var/lib/jenkins/plugins/*
+# Wait for Jenkins to start (replace localhost with your Jenkins hostname if necessary)
+echo "Waiting for Jenkins to start"
+while ! nc -z localhost 8080; do
+  sleep 1
+done
+
+export JENKINS_URL=http://localhost:8080
+export JENKINS_USER=admin
+export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+
+# Install recommended plugins
+plugins=(
+  cloudbees-folder
+  antisamy-markup-formatter
+  build-timeout
+  credentials-binding
+  timestamper
+  ws-cleanup
+  ant
+  gradle
+  workflow-aggregator
+  github-branch-source
+  pipeline-github-lib
+  pipeline-stage-view
+  git
+  github
+  github-api
+  ssh-slaves
+  matrix-auth
+  pam-auth
+  ldap
+  email-ext
+  mailer
+  metrics
+  pipeline-graph-view
+  docker-commons
+)
+
+# Install the recommended plugins
+echo "Installing recommended plugins"
+for plugin in "${plugins[@]}"; do
+  echo "Installing plugin: $plugin"
+  java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
+done
 
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
