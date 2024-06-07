@@ -14,21 +14,66 @@ java -version
 echo "Setup Jenkins CLI"
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O jenkins-cli.jar
 
-echo "Installing necessary plugins"
-jenkins-plugin-cli --plugins configuration-as-code git github github-api job-dsl github-branch-source
+export JENKINS_URL=http://localhost:8080
+export JENKINS_USER=admin
+export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+
+plugins=(
+  cloudbees-folder
+  antisamy-markup-formatter
+  build-timeout
+  credentials-binding
+  timestamper
+  ws-cleanup
+  ant
+  gradle
+  workflow-aggregator
+  github-branch-source
+  pipeline-github-lib
+  pipeline-stage-view
+  git
+  github
+  github-api
+  ssh-slaves
+  matrix-auth
+  pam-auth
+  ldap
+  email-ext
+  mailer
+  metrics
+  pipeline-graph-view
+  docker-commons
+  job-dsl
+  configuration-as-code
+)
+
+echo "Installing recommended plugins"
+for plugin in "${plugins[@]}"; do
+  echo "Installing plugin: $plugin"
+  java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
+done
 
 echo "Disabling Jenkins setup wizard"
-export JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+echo "Disabling Jenkins setup wizard"
+sudo tee /etc/default/jenkins > /dev/null <<EOL
+JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
+EOL
+
 sudo systemctl daemon-reload
-sudo systemctl enable jenkins
+
+echo "Stopping Jenkins to apply configuration"
+sudo systemctl stop jenkins
 
 echo "Copying JCasC configuration"
 sudo mkdir -p /var/jenkins_home
-sudo cp ~/jenkins/casc.yaml /var/jenkins_home/casc.yaml
+sudo cp ~/jenkins-scripts/casc.yaml /var/jenkins_home/casc.yaml
 export CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"
+sudo chown -R jenkins:jenkins /var/jenkins_home
 
-echo "Starting Jenkins"
-sudo systemctl start jenkins
+echo "Setting JCasC environment variable"
+echo 'CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"' | sudo tee -a /etc/default/jenkins > /dev/null
 
 echo "Restarting Jenkins to apply configuration"
-sudo systemctl restart jenkins
+sudo systemctl start jenkins
+
+echo "Jenkins setup completed"
