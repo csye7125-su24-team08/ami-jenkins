@@ -12,18 +12,20 @@ sudo apt install fontconfig openjdk-17-jre -y
 java -version
 
 # Install Jenkins plugin manager tool:
+echo "Installing Jenkins plugin manager tool"
 wget --quiet \
-  https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.12.13/jenkins-plugin-manager-2.12.13.jar
+  https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.13.0/jenkins-plugin-manager-2.13.0.jar
 
 # Install plugins with jenkins-plugin-manager tool:
-sudo java -jar ./jenkins-plugin-manager-2.12.13.jar --war /usr/share/java/jenkins.war \
+echo "Installing Jenkins plugins"
+sudo java -jar ./jenkins-plugin-manager-2.13.0.jar --war /usr/share/java/jenkins.war \
   --plugin-download-directory /var/lib/jenkins/plugins --plugin-file ~/jenkins-scripts/plugins.txt
 
 sudo chown jenkins:jenkins /var/lib/jenkins/plugins/*
 
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
-sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
+sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
 sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
 
 echo "Copying JCasC configuration"
