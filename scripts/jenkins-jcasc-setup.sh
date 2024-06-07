@@ -26,7 +26,7 @@ sudo chown jenkins:jenkins /var/lib/jenkins/plugins/*
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
 sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
-sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
+sudo sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
 
 echo "Copying JCasC configuration"
 sudo cp ~/jenkins-scripts/casc.yaml /var/lib/jenkins/casc.yaml
