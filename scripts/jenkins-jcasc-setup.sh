@@ -53,6 +53,8 @@ plugins=(
   metrics
   pipeline-graph-view
   docker-commons
+  configuration-as-code
+  job-dsl
 )
 
 # Install the recommended plugins
@@ -62,6 +64,8 @@ for plugin in "${plugins[@]}"; do
   java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
 done
 
+java -jar jenkins-cli.jar -s "localhost:8080" -auth "admin:admin" install-plugin job-dsl
+
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
 sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
@@ -70,6 +74,10 @@ sudo sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/jenkins-scripts
 echo "Copying JCasC configuration"
 sudo cp ~/jenkins-scripts/casc.yaml /var/lib/jenkins/casc.yaml
 sudo chown jenkins:jenkins /var/lib/jenkins/casc.yaml
+
+echo "Copying Jenkins jobs"
+sudo mv -r ~/seedjob.groovy /var/lib/jenkins/seedjob.groovy
+sudo chown jenkins:jenkins /var/lib/jenkins/seedjob.groovy
 
 # Configure JAVA_OPTS to disable setup wizard
 sudo mkdir -p /etc/systemd/system/jenkins.service.d/
