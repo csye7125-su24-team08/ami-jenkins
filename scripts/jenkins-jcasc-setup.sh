@@ -17,7 +17,7 @@ wget --quiet \
 
 # Install plugins with jenkins-plugin-manager tool:
 sudo java -jar ./jenkins-plugin-manager-2.12.13.jar --war /usr/share/java/jenkins.war \
-  --plugin-download-directory /var/lib/jenkins/plugins --plugin-file ~/plugins.txt
+  --plugin-download-directory /var/lib/jenkins/plugins --plugin-file ~/jenkins-scripts/plugins.txt
 
 sudo chown jenkins:jenkins /var/lib/jenkins/plugins/*
 
