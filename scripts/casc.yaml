@@ -30,7 +30,7 @@ unclassified:
     url: https://jenkins.clustering.ninja
 
 jobs:
-  scripts: >
+  script: >
       pipelineJob('build-jenkins-image') {
         definition {
           cpsScm {

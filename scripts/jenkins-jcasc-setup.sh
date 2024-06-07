@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Installing Jenkins"
+echo "-----------------------------Installing Jenkins-----------------------------"
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list >/dev/null
 sudo apt-get update
@@ -11,74 +11,58 @@ sudo apt install fontconfig openjdk-17-jre -y
 
 java -version
 
-echo "Disabling Jenkins setup wizard"
-sudo tee /etc/default/jenkins >/dev/null <<EOL
-JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
-EOL
+# Install Jenkins plugin manager tool:
+wget --quiet \
+  https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.12.13/jenkins-plugin-manager-2.12.13.jar
+
+# Install plugins with jenkins-plugin-manager tool:
+sudo java -jar ./jenkins-plugin-manager-2.12.13.jar --war /usr/share/java/jenkins.war \
+  --plugin-download-directory /var/lib/jenkins/plugins --plugin-file ~/plugins.txt
+
+sudo chown jenkins:jenkins /var/lib/jenkins/plugins/*
+
+# Replace placeholders in the casc.yaml file
+echo "Replacing placeholders in the casc.yaml file"
+sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
+sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
+
+echo "Copying JCasC configuration"
+sudo cp ~/jenkins-scripts/casc.yaml /var/lib/jenkins/casc.yaml
+sudo chown jenkins:jenkins /var/lib/jenkins/casc.yaml
+
+# Configure JAVA_OPTS to disable setup wizard
+sudo mkdir -p /etc/systemd/system/jenkins.service.d/
+{
+  echo "[Service]"
+  echo "Environment=\"JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dcasc.jenkins.config=/var/lib/jenkins/casc.yaml\""
+} | sudo tee /etc/systemd/system/jenkins.service.d/override.conf
 
 echo "Starting Jenkins"
 sudo systemctl daemon-reload
-sudo systemctl enable jenkins
-sudo systemctl start jenkins
-
-echo "Setup Jenkins CLI"
-wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O jenkins-cli.jar
-
-export JENKINS_URL=http://localhost:8080
-export JENKINS_USER=admin
-export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
-
-plugins=(
-  cloudbees-folder
-  antisamy-markup-formatter
-  build-timeout
-  credentials-binding
-  timestamper
-  ws-cleanup
-  ant
-  gradle
-  workflow-aggregator
-  github-branch-source
-  pipeline-github-lib
-  pipeline-stage-view
-  git
-  github
-  github-api
-  ssh-slaves
-  matrix-auth
-  pam-auth
-  ldap
-  email-ext
-  mailer
-  metrics
-  pipeline-graph-view
-  docker-commons
-  job-dsl
-  configuration-as-code
-)
-
-echo "Installing recommended plugins"
-for plugin in "${plugins[@]}"; do
-  echo "Installing plugin: $plugin"
-  while ! java -jar ~/jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"; do
-    echo "Command failed. Retrying in 5 seconds..."
-    sleep 5
-  done
-done
-
-echo "Stopping Jenkins to apply configuration"
 sudo systemctl stop jenkins
-
-echo "Copying JCasC configuration"
-sudo mkdir -p /var/jenkins_home
-sudo cp ~/jenkins-scripts/casc.yaml /var/jenkins_home/casc.yaml
-export CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"
-sudo chown -R jenkins:jenkins /var/jenkins_home
-
-echo "Setting JCasC environment variable"
-echo 'CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"' | sudo tee -a /etc/default/jenkins >/dev/null
-
-echo "Restarting Jenkins to apply configuration"
 sudo systemctl start jenkins
 
 echo "Jenkins setup completed"
+
+# Add Docker's official GPG key:
+echo "-----------------------------Installing Docker-----------------------------"
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |
+  sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+
+# Install Docker:
+sudo apt-get update && sudo apt-get install docker-ce -y
+
+# Provide relevant permissions
+sudo chmod 666 /var/run/docker.sock
+sudo usermod -a -G docker jenkins
+
+# Check Docker version
+echo "Docker $(docker --version)"
