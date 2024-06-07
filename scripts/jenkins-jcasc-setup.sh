@@ -12,7 +12,7 @@ sudo apt install fontconfig openjdk-17-jre -y
 java -version
 
 echo "Disabling Jenkins setup wizard"
-sudo tee /etc/default/jenkins > /dev/null <<EOL
+sudo tee /etc/default/jenkins >/dev/null <<EOL
 JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
 EOL
 
@@ -60,10 +60,11 @@ plugins=(
 echo "Installing recommended plugins"
 for plugin in "${plugins[@]}"; do
   echo "Installing plugin: $plugin"
-  java -jar ~/jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
+  while ! java -jar ~/jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"; do
+    echo "Command failed. Retrying in 5 seconds..."
+    sleep 5
+  done
 done
-
-
 
 echo "Stopping Jenkins to apply configuration"
 sudo systemctl stop jenkins
@@ -75,7 +76,7 @@ export CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"
 sudo chown -R jenkins:jenkins /var/jenkins_home
 
 echo "Setting JCasC environment variable"
-echo 'CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"' | sudo tee -a /etc/default/jenkins > /dev/null
+echo 'CASC_JENKINS_CONFIG="/var/jenkins_home/casc.yaml"' | sudo tee -a /etc/default/jenkins >/dev/null
 
 echo "Restarting Jenkins to apply configuration"
 sudo systemctl start jenkins
