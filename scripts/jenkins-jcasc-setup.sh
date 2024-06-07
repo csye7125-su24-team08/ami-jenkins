@@ -11,12 +11,22 @@ sudo apt install fontconfig openjdk-17-jre -y
 
 java -version
 
+echo "Disabling Jenkins setup wizard"
+sudo tee /etc/default/jenkins > /dev/null <<EOL
+JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
+EOL
+
+echo "Starting Jenkins"
+sudo systemctl daemon-reload
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+
 echo "Setup Jenkins CLI"
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O jenkins-cli.jar
 
 export JENKINS_URL=http://localhost:8080
 export JENKINS_USER=admin
-export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+export JENKINS_PASSWORD=admin
 
 plugins=(
   cloudbees-folder
@@ -50,16 +60,10 @@ plugins=(
 echo "Installing recommended plugins"
 for plugin in "${plugins[@]}"; do
   echo "Installing plugin: $plugin"
-  java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
+  java -jar ~/jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
 done
 
-echo "Disabling Jenkins setup wizard"
-echo "Disabling Jenkins setup wizard"
-sudo tee /etc/default/jenkins > /dev/null <<EOL
-JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
-EOL
 
-sudo systemctl daemon-reload
 
 echo "Stopping Jenkins to apply configuration"
 sudo systemctl stop jenkins
