@@ -1,0 +1,52 @@
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: admin
+        - id: piyush
+          password: piyush
+        - id: anuraag
+          password: anuraag
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              id: "github-credentials"
+              password: "${GH_ACCESS_TOKEN}"
+              scope: GLOBAL
+              username: dongrep
+          - usernamePassword:
+              id: "docker-credentials"
+              password: "${DOCKER_ACCESS_TOKEN}"
+              scope: GLOBAL
+              username: dongrep
+
+unclassified:
+  location:
+    url: https://jenkins.clustering.ninja
+
+jobs:
+  scripts: >
+      pipelineJob('build-jenkins-image') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url(https://github.com/cyse7125-su24-team08/static-site.git')
+                  credentials('github-credentials')
+                }
+                branches('main')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+        triggers {
+          githubPush()
+        }
+      }

@@ -21,8 +21,6 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-
-
   provisioner "file" {
     source      = "./Caddyfile"
     destination = "~/Caddyfile"
@@ -32,36 +30,29 @@ build {
     destination = "~/tokens.txt"
   }
   provisioner "file" {
-    source      = "./scripts/jenkins-scripts/new-user.groovy"
-    destination = "~/new-user.groovy"
+    source      = "./scripts/jenkins-jcasc-setup.sh"
+    destination = "~/jenkins-jcasc-setup.sh"
   }
   provisioner "file" {
-    source      = "./scripts/jenkins-scripts/gh-creds.groovy"
-    destination = "~/gh-creds.groovy"
+    source      = "./scripts/casc.yaml"
+    destination = "~/casc.yaml"
   }
   provisioner "file" {
-    source      = "./scripts/jenkins-scripts/docker-creds.groovy"
-    destination = "~/docker-creds.groovy"
-  }
-  provisioner "file" {
-    source      = "./scripts/jenkins-scripts/docker-image-job.groovy"
-    destination = "~/docker-image-job.groovy"
+    source      = "./scripts/plugins.txt"
+    destination = "~/plugins.txt"
   }
   provisioner "shell" {
     inline = [
       "sudo mkdir -p ~/jenkins-scripts",
-      "sudo mv ~/new-user.groovy ~/jenkins-scripts/new-user.groovy",
-      "sudo mv ~/gh-creds.groovy ~/jenkins-scripts/gh-creds.groovy",
-      "sudo mv ~/docker-creds.groovy ~/jenkins-scripts/docker-creds.groovy",
-      "sudo mv ~/docker-image-job.groovy ~/jenkins-scripts/docker-image-job.groovy",
+      "export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)",
+      "export DOCKERHUB_ACCESS_TOKEN=$(tail -n 1 tokens.txt)",
+      "cp ~/plugins.txt ~/jenkins-scripts/plugins.txt",
     ]
   }
   provisioner "shell" {
     scripts = [
-      "scripts/jenkins.sh",
-      "scripts/caddy.sh",
-      "scripts/create_users.sh",
-      "scripts/job-setup.sh"
+      "scripts/jenkins-jcasc-setup.sh",
+      "scripts/caddy.sh"
     ]
   }
 }
