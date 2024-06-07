@@ -26,7 +26,7 @@ wget http://localhost:8080/jnlpJars/jenkins-cli.jar -O jenkins-cli.jar
 
 export JENKINS_URL=http://localhost:8080
 export JENKINS_USER=admin
-export JENKINS_PASSWORD=admin
+export JENKINS_PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
 
 plugins=(
   cloudbees-folder
