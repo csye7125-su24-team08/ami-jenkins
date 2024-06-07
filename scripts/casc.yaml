@@ -28,6 +28,9 @@ credentials:
 unclassified:
   location:
     url: https://jenkins.clustering.ninja
+    
+  crumbIssuer:
+    excludeClientIPFromCrumb: true
 
 jobs:
   script: >
