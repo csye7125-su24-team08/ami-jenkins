@@ -64,6 +64,9 @@ for plugin in "${plugins[@]}"; do
   java -jar jenkins-cli.jar -s "$JENKINS_URL" -auth "$JENKINS_USER:$JENKINS_PASSWORD" install-plugin "$plugin"
 done
 
+export GH_ACCESS_TOKEN=$(head -n 1 tokens.txt)
+export DOCKERHUB_ACCESS_TOKEN=$(tail -n 1 tokens.txt)
+
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
 sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
