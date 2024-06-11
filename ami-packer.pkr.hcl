@@ -34,18 +34,12 @@ build {
     destination = "~/jenkins-jcasc-setup.sh"
   }
   provisioner "file" {
-    source      = "./scripts/casc.yaml"
+    source      = "./jenkins-config/casc.yaml"
     destination = "~/casc.yaml"
   }
   provisioner "file" {
     source      = "./scripts/seedjob.groovy"
     destination = "~/seedjob.groovy"
-  }
-  provisioner "shell" {
-    inline = [
-      "sudo mkdir -p ~/jenkins-scripts",
-      "sudo cp ~/casc.yaml ~/jenkins-scripts/casc.yaml",
-    ]
   }
   provisioner "shell" {
     scripts = [
