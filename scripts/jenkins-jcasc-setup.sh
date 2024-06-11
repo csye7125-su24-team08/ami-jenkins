@@ -1,6 +1,13 @@
 #!/bin/bash
 
-echo "-----------------------------Installing Jenkins-----------------------------"
+echo "**************************************************************************"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "*                           Installing Jenkins                           *"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "**************************************************************************"
+
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list >/dev/null
 sudo apt-get update
@@ -69,11 +76,11 @@ export DOCKER_ACCESS_TOKEN=$(tail -n 1 tokens.txt)
 
 # Replace placeholders in the casc.yaml file
 echo "Replacing placeholders in the casc.yaml file"
-sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
-sudo sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/jenkins-scripts/casc.yaml
+sudo sed -i "s/\${GH_ACCESS_TOKEN}/$GH_ACCESS_TOKEN/g" ~/casc.yaml
+sudo sed -i "s/\${DOCKER_ACCESS_TOKEN}/$DOCKER_ACCESS_TOKEN/g" ~/casc.yaml
 
 echo "Copying JCasC configuration"
-sudo cp ~/jenkins-scripts/casc.yaml /var/lib/jenkins/casc.yaml
+sudo mv ~/casc.yaml /var/lib/jenkins/casc.yaml
 sudo chown jenkins:jenkins /var/lib/jenkins/casc.yaml
 
 echo "Copying Jenkins jobs"
@@ -95,7 +102,13 @@ sudo systemctl start jenkins
 echo "Jenkins setup completed"
 
 # Add Docker's official GPG key:
-echo "-----------------------------Installing Docker-----------------------------"
+echo "**************************************************************************"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "*                           Installing Docker                            *"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "**************************************************************************"
 sudo apt-get install ca-certificates curl gnupg
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
