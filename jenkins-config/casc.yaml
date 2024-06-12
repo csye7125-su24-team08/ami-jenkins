@@ -34,4 +34,7 @@ unclassified:
     url: https://jenkins.clustering.ninja
 
 jobs:
-  - file: /var/lib/jenkins/seedjob.groovy
+  - file: /var/lib/jenkins/static-site-seedjob.groovy
+  - file: /var/lib/jenkins/webapp-seedjob.groovy
+  - file: /var/lib/jenkins/helm-webapp-seedjob.groovy
+  - file: /var/lib/jenkins/terraform-seedjob.groovy

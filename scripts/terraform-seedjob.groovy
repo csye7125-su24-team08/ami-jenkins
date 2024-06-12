@@ -1,10 +1,10 @@
-multibranchPipelineJob('helm-webapp') {
+multibranchPipelineJob('infra-jenkins') {
   branchSources {
     github {
-      id('team08-helm-webapp-cve-processor')
+      id('team08-infra-jenkins')
       scanCredentialsId('GITHUB_CREDENTIALS')
-      repoOwner('cyse7125-su24-team08')
-      repository('helm-webapp-cve-processor')
+      repoOwner('csye7125-su24-team08')
+      repository('infra-jenkins')
     }
   }
 

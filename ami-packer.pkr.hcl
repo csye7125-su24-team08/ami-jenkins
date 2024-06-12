@@ -38,8 +38,20 @@ build {
     destination = "~/casc.yaml"
   }
   provisioner "file" {
-    source      = "./scripts/seedjob.groovy"
-    destination = "~/seedjob.groovy"
+    source      = "./scripts/static-site-seedjob.groovy"
+    destination = "~/static-site-seedjob.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/helm-webapp-seedjob.groovy"
+    destination = "~/helm-webapp-seedjob.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/webapp-seedjob.groovy"
+    destination = "~/webapp-seedjob.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/terraform-seedjob.groovy"
+    destination = "~/terraform-seedjob.groovy"
   }
   provisioner "shell" {
     scripts = [

@@ -84,8 +84,8 @@ sudo mv ~/casc.yaml /var/lib/jenkins/casc.yaml
 sudo chown jenkins:jenkins /var/lib/jenkins/casc.yaml
 
 echo "Copying Jenkins jobs"
-sudo mv ~/seedjob.groovy /var/lib/jenkins/seedjob.groovy
-sudo chown jenkins:jenkins /var/lib/jenkins/seedjob.groovy
+sudo mv ~/*.groovy /var/lib/jenkins/
+sudo chown jenkins:jenkins /var/lib/jenkins/*
 
 # Configure JAVA_OPTS to disable setup wizard
 sudo mkdir -p /etc/systemd/system/jenkins.service.d/
