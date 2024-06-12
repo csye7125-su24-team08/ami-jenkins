@@ -29,6 +29,23 @@ credentials:
               scope: GLOBAL
               username: dongrep
 
+tool:
+  nodejs:
+    defaultProperties:
+      - installSource:
+          installers:
+            - nodeJSInstaller:
+                npmPackagesRefreshHours: 72
+    installations:
+      - name: "node"
+        home: ""
+        properties:
+          - installSource:
+              installers:
+                - nodeJSInstaller:
+                    id: "22.3.0"
+                    npmPackagesRefreshHours: 72
+
 unclassified:
   location:
     url: https://jenkins.clustering.ninja
