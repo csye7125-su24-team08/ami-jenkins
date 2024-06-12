@@ -6,7 +6,7 @@ pipelineJob('seed-job-static-site') {
         scm {
           git {
             remote {
-              url('https://github.com/cyse7125-su24-team08/static-site.git')
+              url('https://github.com/csye7125-su24-team08/static-site.git')
               credentials('GITHUB_CREDENTIALS') // Specify your GitHub credentials ID
             }
             branch('main') // Specify the branch you want to build
