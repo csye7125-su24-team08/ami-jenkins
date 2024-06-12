@@ -117,7 +117,7 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo \
   gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 
 # Create a deb repository
-NODE_MAJOR=20
+NODE_MAJOR=22
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo \
   tee /etc/apt/sources.list.d/nodesource.list
 
@@ -157,3 +157,41 @@ sudo usermod -a -G docker jenkins
 
 # Check Docker version
 echo "Docker $(docker --version)"
+
+echo "**************************************************************************"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "*                           Installing Helm                              *"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "**************************************************************************"
+
+sudo apt-get update
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg >/dev/null
+sudo apt-get install apt-transport-https -y
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" |
+  sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update && sudo apt-get install helm
+
+# Check Helm version
+echo "Helm $(helm version)"
+
+
+echo "**************************************************************************"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "*                           Installing Kubectl                           *"
+echo "*                                                                        *"
+echo "*                                                                        *"
+echo "**************************************************************************"
+
+sudo apt-get update
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key |
+  sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' |
+  sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update && sudo apt-get install kubectl -y
+
+# Check Kubectl version
+echo "Kubectl $(kubectl version --client)"
