@@ -1,4 +1,4 @@
-multibranchPipelineJob('helm-webapp') {
+multibranchPipelineJob('Helm Charts Webapp') {
   branchSources {
     github {
       id('team08-helm-webapp-cve-processor')
@@ -10,8 +10,8 @@ multibranchPipelineJob('helm-webapp') {
 
   orphanedItemStrategy {
     discardOldItems {
-      numToKeep(5)
-      daysToKeep(1)
+      numToKeep(-1)
+      daysToKeep(-1)
     }
   }
 }

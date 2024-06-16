@@ -1,4 +1,4 @@
-multibranchPipelineJob('webapp-cve-processor') {
+multibranchPipelineJob('Webapp Cve Processor') {
   branchSources {
     github {
       id('team08-webapp-cve-processor')
@@ -10,8 +10,8 @@ multibranchPipelineJob('webapp-cve-processor') {
 
   orphanedItemStrategy {
     discardOldItems {
-      numToKeep(5)
-      daysToKeep(1)
+      numToKeep(-1)
+      daysToKeep(-1)
     }
   }
 }
