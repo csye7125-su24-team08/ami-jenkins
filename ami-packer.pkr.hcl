@@ -53,6 +53,10 @@ build {
     source      = "./scripts/terraform-seedjob.groovy"
     destination = "~/terraform-seedjob.groovy"
   }
+  provisioner "file" {
+    source      = "./scripts/infra-aws-seedjob.groovy"
+    destination = "~/infra-aws-seedjob.groovy"
+  }
   provisioner "shell" {
     scripts = [
       "scripts/jenkins-jcasc-setup.sh",
