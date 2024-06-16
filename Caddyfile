@@ -1,6 +1,3 @@
 jenkins.clustering.ninja {
     reverse_proxy localhost:8080
-    tls {
-        ca https://acme-v02.api.letsencrypt.org/directory
-    }
 }
