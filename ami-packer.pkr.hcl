@@ -18,6 +18,7 @@ source "amazon-ebs" "ubuntu" {
     no_device = true
     encrypted = false
     volume_size = 30
+    device_name = "/dev/sda1"
   }
 }
 
