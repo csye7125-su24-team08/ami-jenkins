@@ -1,7 +1,7 @@
 multibranchPipelineJob('Static Site') {
   branchSources {
     github {
-      id('team08-staic-site')
+      id('team08-static-site')
       scanCredentialsId('GITHUB_CREDENTIALS')
       repoOwner('csye7125-su24-team08')
       repository('static-site')
