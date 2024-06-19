@@ -15,8 +15,8 @@ source "amazon-ebs" "ubuntu" {
   region                  = var.region
   ami_virtualization_type = "hvm"
   launch_block_device_mappings {
-    no_device = true
-    encrypted = false
+    no_device   = true
+    encrypted   = false
     volume_size = 30
     device_name = "/dev/sda1"
   }
