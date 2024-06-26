@@ -48,12 +48,20 @@ build {
     destination = "~/static-site-seedjob.groovy"
   }
   provisioner "file" {
-    source      = "./scripts/helm-webapp-seedjob.groovy"
-    destination = "~/helm-webapp-seedjob.groovy"
+    source      = "./scripts/helm-webapp-processor-seedjob.groovy"
+    destination = "~/helm-webapp-processor-seedjob.groovy"
   }
   provisioner "file" {
-    source      = "./scripts/webapp-seedjob.groovy"
-    destination = "~/webapp-seedjob.groovy"
+    source      = "./scripts/helm-webapp-consumer-seedjob.groovy"
+    destination = "~/helm-webapp-consumer-seedjob.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/webapp-processor-seedjob.groovy"
+    destination = "~/webapp-processor-seedjob.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/webapp-consumer-seedjob.groovy"
+    destination = "~/webapp-consumer-seedjob.groovy"
   }
   provisioner "file" {
     source      = "./scripts/terraform-seedjob.groovy"

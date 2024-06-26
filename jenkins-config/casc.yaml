@@ -52,7 +52,9 @@ unclassified:
 
 jobs:
   - file: /var/lib/jenkins/static-site-seedjob.groovy
-  - file: /var/lib/jenkins/webapp-seedjob.groovy
-  - file: /var/lib/jenkins/helm-webapp-seedjob.groovy
+  - file: /var/lib/jenkins/webapp-processor-seedjob.groovy
+  - file: /var/lib/jenkins/webapp-consumer-seedjob.groovy
+  - file: /var/lib/jenkins/helm-webapp-processor-seedjob.groovy
+  - file: /var/lib/jenkins/helm-webapp-consumer-seedjob.groovy
   - file: /var/lib/jenkins/terraform-seedjob.groovy
   - file: /var/lib/jenkins/infra-aws-seedjob.groovy
