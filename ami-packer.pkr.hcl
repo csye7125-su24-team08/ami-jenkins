@@ -72,7 +72,7 @@ build {
     destination = "~/infra-aws-seedjob.groovy"
   }
   provisioner "file" {
-    source      = "./scripts/helm-eks-autoscaler-seedjob.groovy" 
+    source      = "./scripts/helm-eks-autoscaler-seedjob.groovy"
     destination = "~/helm-eks-autoscaler-seedjob.groovy"
   }
   provisioner "shell" {
