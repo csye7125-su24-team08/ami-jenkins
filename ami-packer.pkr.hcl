@@ -71,6 +71,10 @@ build {
     source      = "./scripts/infra-aws-seedjob.groovy"
     destination = "~/infra-aws-seedjob.groovy"
   }
+  provisioner "file" {
+    source      = "./scripts/helm-eks-autoscaler-seedjob.groovy" 
+    destination = "~/helm-eks-autoscaler-seedjob.groovy"
+  }
   provisioner "shell" {
     scripts = [
       "scripts/jenkins-jcasc-setup.sh",
