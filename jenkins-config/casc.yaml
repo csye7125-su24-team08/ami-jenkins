@@ -59,3 +59,5 @@ jobs:
   - file: /var/lib/jenkins/terraform-seedjob.groovy
   - file: /var/lib/jenkins/infra-aws-seedjob.groovy
   - file: /var/lib/jenkins/helm-eks-autoscaler-seedjob.groovy
+  - file: /var/lib/jenkins/helm-cve-operator-seedjob.groovy
+  - file: /var/lib/jenkins/cve-operator-seedjob.groovy

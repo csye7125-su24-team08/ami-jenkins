@@ -75,6 +75,15 @@ build {
     source      = "./scripts/helm-eks-autoscaler-seedjob.groovy"
     destination = "~/helm-eks-autoscaler-seedjob.groovy"
   }
+  provisioner "file" {
+    source      = "./scripts/helm-cve-operator-seedjob.groovy"
+    destination = "~/helm-cve-operator-seedjob.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/cve-operator-seedjob.groovy"
+    destination = "~/cve-operator-seedjob.groovy"
+  }
+
   provisioner "shell" {
     scripts = [
       "scripts/jenkins-jcasc-setup.sh",
