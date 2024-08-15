@@ -51,6 +51,9 @@ unclassified:
     url: https://jenkins.clustering.ninja
 
 jobs:
+  - file: /var/lib/jenkins/cve-rag-api.groovy
+  - file: /var/lib/jenkins/cve-rag-ui.groovy
+  - file: /var/lib/jenkins/helm-cve-rag.groovy
   - file: /var/lib/jenkins/static-site-seedjob.groovy
   - file: /var/lib/jenkins/webapp-processor-seedjob.groovy
   - file: /var/lib/jenkins/webapp-consumer-seedjob.groovy
