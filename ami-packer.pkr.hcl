@@ -83,6 +83,18 @@ build {
     source      = "./scripts/cve-operator-seedjob.groovy"
     destination = "~/cve-operator-seedjob.groovy"
   }
+  provisioner "file" {
+    source      = "./scripts/cve-rag-api.groovy"
+    destination = "~/cve-rag-api.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/cve-rag-ui.groovy"
+    destination = "~/cve-rag-ui.groovy"
+  }
+  provisioner "file" {
+    source      = "./scripts/helm-cve-rag.groovy"
+    destination = "~/helm-cve-rag.groovy"
+  }
 
   provisioner "shell" {
     scripts = [
